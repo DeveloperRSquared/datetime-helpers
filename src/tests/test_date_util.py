@@ -1,2 +1,3 @@
-def test():
+
+def test() -> None:
     assert 1
