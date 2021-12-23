@@ -2,12 +2,10 @@ import calendar
 import datetime
 from typing import Optional
 
+from http_exceptions.client_exceptions import BadRequestException
+
 JSON_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
 EPOCH = datetime.datetime.fromtimestamp(0)
-
-
-class DateUtilException(Exception):
-    pass
 
 
 def get_day_of_week(dt: datetime.date) -> str:  # pylint: disable=invalid-name
@@ -61,7 +59,7 @@ def get_nth_business_day_of_month(n: int, dt: Optional[datetime.date] = None) ->
     for _ in range(n - 1):
         nth_business_day_of_month = get_next_business_day(dt=nth_business_day_of_month)
     if nth_business_day_of_month.month != dt.month:
-        raise DateUtilException("n > # of business days in month")
+        raise BadRequestException(message="n > # of business days in month")
     return nth_business_day_of_month
 
 
