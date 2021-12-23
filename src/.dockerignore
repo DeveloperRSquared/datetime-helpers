@@ -2,7 +2,7 @@
 *
 
 # Except ...
-!date_utils/**
+!datetime_helpers/**
 !tests/**
 !requirements.txt
 !requirements.dev.txt
