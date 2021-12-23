@@ -65,10 +65,10 @@ jobs:
         run: docker run --rm --volume $(pwd)/.flake8:${WORKDIR}/.flake8 --env CI=true --entrypoint python ${DOCKER_IMAGE} -m flake8 --config ${WORKDIR}/.flake8
 
       - name: Check lint (pylint)
-        run: docker run --rm --volume $(pwd)/pyproject.toml:${WORKDIR}/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m pylint --rcfile ${WORKDIR}/pyproject.toml http_exceptions tests
+        run: docker run --rm --volume $(pwd)/pyproject.toml:${WORKDIR}/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m pylint --rcfile ${WORKDIR}/pyproject.toml date_utils tests
 
       - name: Check typing (mypy)
-        run: docker run --rm --volume $(pwd)/pyproject.toml:${WORKDIR}/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m mypy --config-file ${WORKDIR}/pyproject.toml http_exceptions tests
+        run: docker run --rm --volume $(pwd)/pyproject.toml:${WORKDIR}/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m mypy --config-file ${WORKDIR}/pyproject.toml date_utils tests
 
       - name: Run tests (pytest)
         run: docker run --rm --volume $(pwd)/pyproject.toml:${WORKDIR}/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m pytest -c ${WORKDIR}/pyproject.toml
