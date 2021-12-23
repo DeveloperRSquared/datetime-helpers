@@ -4,7 +4,7 @@ from typing import List
 from setuptools import find_packages  # type: ignore[import]
 from setuptools import setup
 
-from date_utils import __version__
+from date_helpers import __version__
 
 setup_directory = Path(__file__).absolute().parent
 
@@ -24,19 +24,19 @@ with open(file=str(setup_directory.parent / 'README.md'), mode='r', encoding='ut
     long_description = file.read()
 
 setup(
-    name='date-utils',
+    name='date-helpers',
     version=__version__,
-    description="Common Python date utils",
+    description="Util for working with date and datetime objects",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='https://github.com/DeveloperRSquared/date-utils/',
+    url='https://github.com/DeveloperRSquared/date-helpers/',
     packages=find_packages(exclude=['tests*']),
     license='MIT LICENSE',
     python_requires='>=3.7',
     install_requires=parse_requirements(requirements_file=str(Path(setup_directory) / 'requirements.txt')),
     tests_require=parse_requirements(requirements_file=str(Path(setup_directory) / 'requirements.dev.txt')),
     package_data={
-        'date_utils': [
+        'date_helpers': [
             'py.typed',
         ]
     },
@@ -59,10 +59,10 @@ setup(
         'Typing :: Typed',
     ],
     project_urls={
-        'Documentation': 'https://github.com/DeveloperRSquared/date-utils#date-utils',
+        'Documentation': 'https://github.com/DeveloperRSquared/date-helpers#date-helpers',
         'Funding': 'https://www.paypal.com/paypalme/rikhilrai',
-        'Repository': 'https://github.com/DeveloperRSquared/date-utils/',
-        'Source': 'https://github.com/DeveloperRSquared/date-utils/',
-        'Tracker': 'https://github.com/DeveloperRSquared/date-utils/issues',
+        'Repository': 'https://github.com/DeveloperRSquared/date-helpers/',
+        'Source': 'https://github.com/DeveloperRSquared/date-helpers/',
+        'Tracker': 'https://github.com/DeveloperRSquared/date-helpers/issues',
     },
 )
