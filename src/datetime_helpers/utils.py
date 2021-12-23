@@ -1,4 +1,3 @@
-# NOTE(rikhil): explicitly want to avoid the use of pandas here. Pandas should be an optional dependency
 import calendar
 import datetime
 from typing import Optional
@@ -24,9 +23,7 @@ def is_weekday(dt: datetime.date) -> bool:  # pylint: disable=invalid-name
     return not is_weekend(dt=dt)
 
 
-def get_previous_business_day(  # pylint: disable=invalid-name
-    dt: Optional[datetime.date] = None,
-) -> datetime.date:  # pylint: disable=invalid-name
+def get_previous_business_day(dt: Optional[datetime.date] = None) -> datetime.date:  # pylint: disable=invalid-name
     dt = dt or datetime.date.today()
     if get_day_of_week(dt=dt) == "Sunday":
         previous_business_day_of_month = dt - datetime.timedelta(days=2)
@@ -41,9 +38,7 @@ def get_previous_business_day(  # pylint: disable=invalid-name
 get_previous_working_day = get_previous_business_day
 
 
-def get_next_business_day(  # pylint: disable=invalid-name
-    dt: Optional[datetime.date] = None,
-) -> datetime.date:
+def get_next_business_day(dt: Optional[datetime.date] = None) -> datetime.date:  # pylint: disable=invalid-name
     dt = dt or datetime.date.today()
     if get_day_of_week(dt=dt) == "Friday":
         next_business_day_of_month = dt + datetime.timedelta(days=3)
@@ -54,9 +49,7 @@ def get_next_business_day(  # pylint: disable=invalid-name
     return next_business_day_of_month
 
 
-def get_first_business_day_of_month(  # pylint: disable=invalid-name
-    dt: Optional[datetime.date] = None,
-) -> datetime.date:
+def get_first_business_day_of_month(dt: Optional[datetime.date] = None) -> datetime.date:  # pylint: disable=invalid-name
     dt = dt or datetime.date.today()
     first_day_of_month = datetime.date(dt.year, dt.month, 1)
     if is_weekday(dt=first_day_of_month):
