@@ -10,7 +10,7 @@ defaults:
     working-directory: src
 
 env:
-  DOCKER_IMAGE: http-exceptions
+  DOCKER_IMAGE: datetime-helpers
   WORKDIR: /app
 
 jobs:
