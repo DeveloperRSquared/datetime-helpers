@@ -30,6 +30,8 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/DeveloperRSquared/datetime-helpers/',
+    author='rikhilrai',
+    author_email='developerrsquared@gmail.com',
     packages=find_packages(exclude=['tests*']),
     license='MIT LICENSE',
     python_requires='>=3.7',
@@ -40,12 +42,13 @@ setup(
             'py.typed',
         ]
     },
+    zip_safe=False,
     test_suite='tests',
     include_package_data=True,
     extras_require={},
     keywords=['date', 'datetime', 'api', 'web', 'rest', 'python'],
     classifiers=[
-        # 'Development Status :: 5 - Production/Stable',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
         'License :: OSI Approved :: MIT License',
