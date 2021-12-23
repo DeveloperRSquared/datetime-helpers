@@ -1,0 +1,8 @@
+# Ignore everything
+*
+
+# Except ...
+!date_utils/**
+!tests/**
+!requirements.txt
+!requirements.dev.txt
