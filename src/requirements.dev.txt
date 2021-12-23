@@ -2,7 +2,7 @@
 autoflake==1.4
 black==21.10b0
 flake8==4.0.1
-freezegun
+freezegun==1.16.0
 isort==5.10.1
 mypy==0.910
 pre-commit==2.15.0
