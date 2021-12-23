@@ -2,7 +2,7 @@
 *
 
 # Except ...
-!http_exceptions/**
+!date_utils/**
 !tests/**
 !requirements.txt
 !requirements.dev.txt
