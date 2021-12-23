@@ -1,7 +1,7 @@
 # pylint: disable=no-self-use
 import datetime
 
-from freezegun import freeze_time
+from freezegun import freeze_time  # type: ignore[import]
 
 import datetime_helpers
 
