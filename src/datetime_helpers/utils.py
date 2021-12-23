@@ -34,10 +34,6 @@ def get_previous_business_day(dt: Optional[datetime.date] = None) -> datetime.da
     return previous_business_day_of_month
 
 
-# NOTE(rikhil): only here for backwards compatibility. remove once we bump to v1
-get_previous_working_day = get_previous_business_day
-
-
 def get_next_business_day(dt: Optional[datetime.date] = None) -> datetime.date:  # pylint: disable=invalid-name
     dt = dt or datetime.date.today()
     if get_day_of_week(dt=dt) == "Friday":
