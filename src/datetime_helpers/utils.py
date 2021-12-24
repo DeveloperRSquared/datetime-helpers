@@ -63,8 +63,8 @@ def get_nth_business_day_of_month(n: int, dt: Optional[datetime.date] = None) ->
     return nth_business_day_of_month
 
 
-def datetime_to_string(dt: datetime.datetime, date_format: str = JSON_DATE_FORMAT) -> str:  # pylint: disable=invalid-name
-    return dt.strftime(date_format)
+def datetime_to_string(dt: datetime.datetime, datetime_format: str = JSON_DATE_FORMAT) -> str:  # pylint: disable=invalid-name
+    return dt.strftime(datetime_format)
 
 
 def date_to_string(dt: datetime.date, date_format: str = "%Y-%m-%d") -> str:  # pylint: disable=invalid-name  # pylint: disable=invalid-name

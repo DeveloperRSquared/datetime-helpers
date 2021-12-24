@@ -81,7 +81,7 @@ class TestDatetimeToString:
     def test_datetime_to_string_custom_format(self) -> None:
         current_dt = datetime.datetime(2016, 4, 17, 3, 12, 34)
         expected_string = "04-2016-17T03:12:34.000000Z"
-        assert datetime_helpers.datetime_to_string(dt=current_dt, date_format="%m-%Y-%dT%H:%M:%S.%fZ") == expected_string
+        assert datetime_helpers.datetime_to_string(dt=current_dt, datetime_format="%m-%Y-%dT%H:%M:%S.%fZ") == expected_string
 
 
 class TestDateToString:
