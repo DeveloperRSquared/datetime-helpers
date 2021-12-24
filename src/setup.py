@@ -46,7 +46,7 @@ setup(
     test_suite='tests',
     include_package_data=True,
     extras_require={},
-    keywords=['date', 'datetime', 'api', 'web', 'rest', 'python'],
+    keywords=['date', 'datetime', 'rest', 'python'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
