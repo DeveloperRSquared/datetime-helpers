@@ -1,5 +1,5 @@
 # isort: skip_file
-__version__ = '0.0.4'
+__version__ = '0.0.6'
 
 from .utils import get_day_of_week
 from .utils import is_weekend
@@ -12,3 +12,4 @@ from .utils import datetime_to_string
 from .utils import date_to_string
 from .utils import datetime_from_string
 from .utils import date_from_string
+from .utils import datetime_from_windows_filetime
