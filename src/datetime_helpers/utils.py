@@ -77,3 +77,8 @@ def datetime_from_string(text: str, datetime_format: str = JSON_DATE_FORMAT) -> 
 
 def date_from_string(text: str, date_format: str = "%Y-%m-%d") -> datetime.date:
     return datetime_from_string(text=text, datetime_format=date_format).date()
+
+
+def datetime_from_windows_filetime(windows_filetime: int) -> datetime.datetime:
+    windows_epoch = datetime.datetime(1601, 1, 1)
+    return windows_epoch + datetime.timedelta(microseconds=windows_filetime / 10)

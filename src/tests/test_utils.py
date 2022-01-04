@@ -202,3 +202,11 @@ class TestGetNthBusinessDayOfMonth:
         assert datetime_helpers.get_nth_business_day_of_month(dt=current_dt, n=13) == datetime.date(2021, 2, 17)
         assert datetime_helpers.get_nth_business_day_of_month(dt=current_dt, n=14) == datetime.date(2021, 2, 18)
         assert datetime_helpers.get_nth_business_day_of_month(dt=current_dt, n=15) == datetime.date(2021, 2, 19)
+
+
+class TestDatetimeFromWindowsFiletime:
+    # check datetime_from_windows_filetime
+    def test_datetime_from_windows_filetime(self) -> None:
+        assert datetime_helpers.datetime_from_windows_filetime(windows_filetime=116444736000000000) == datetime.datetime(1970, 1, 1, 0, 0)
+        assert datetime_helpers.datetime_from_windows_filetime(windows_filetime=128930364000000000) == datetime.datetime(2009, 7, 25, 23, 0)
+        assert datetime_helpers.datetime_from_windows_filetime(windows_filetime=128930364000001000) == datetime.datetime(2009, 7, 25, 23, 0, 0, 100)
