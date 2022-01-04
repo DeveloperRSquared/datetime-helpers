@@ -206,7 +206,7 @@ class TestGetNthBusinessDayOfMonth:
 
 class TestDatetimeFromWindowsFiletime:
     # check datetime_from_windows_filetime
-    def test_datetime_from_windows_filetime(self):
+    def test_datetime_from_windows_filetime(self) -> None:
         assert datetime_helpers.datetime_from_windows_filetime(windows_filetime=116444736000000000) == datetime.datetime(1970, 1, 1, 0, 0)
         assert datetime_helpers.datetime_from_windows_filetime(windows_filetime=128930364000000000) == datetime.datetime(2009, 7, 25, 23, 0)
         assert datetime_helpers.datetime_from_windows_filetime(windows_filetime=128930364000001000) == datetime.datetime(2009, 7, 25, 23, 0, 0, 100)
