@@ -1,6 +1,7 @@
 import calendar
 import datetime
 from typing import Optional
+from typing import cast
 
 from http_exceptions.client_exceptions import BadRequestException
 
@@ -92,3 +93,29 @@ def date_from_string(text: str, date_format: str = "%Y-%m-%d") -> datetime.date:
 def datetime_from_windows_filetime(windows_filetime: int) -> datetime.datetime:
     windows_epoch = datetime.datetime(1601, 1, 1)
     return windows_epoch + datetime.timedelta(microseconds=windows_filetime / 10)
+
+
+def datetime_to_seconds(dt: datetime.date) -> float:
+    if type(dt) == datetime.date:  # pylint: disable=unidiomatic-typecheck
+        dt = datetime_from_date(dt=dt)
+    epoch = datetime.datetime.utcfromtimestamp(0)
+    delta = cast(datetime.timedelta, dt - epoch)
+    return delta.total_seconds()
+
+
+def datetime_from_seconds(seconds: float) -> datetime.datetime:
+    return datetime.datetime.utcfromtimestamp(seconds)
+
+
+def datetime_to_millis(dt: datetime.date) -> int:
+    return int(datetime_to_seconds(dt=dt) * 1000.0)
+
+
+def datetime_from_millis(millis: float) -> datetime.datetime:
+    return datetime_from_seconds(seconds=millis / 1000.0)
+
+
+def datetime_from_date(dt: datetime.date) -> datetime.datetime:
+    if isinstance(dt, datetime.datetime):
+        return dt
+    return datetime.datetime.combine(dt, datetime.time.min)

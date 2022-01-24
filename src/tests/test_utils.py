@@ -195,13 +195,13 @@ class TestGetFirstBusinessDayOfMonth:
             (datetime.date(2021, 12, 20), datetime.date(2021, 12, 1)),
         ],
     )
-    def test_first_business_day_of_month(self, dt: datetime.date, first_business_day_of_month: datetime.date) -> None:
+    def test_get_first_business_day_of_month(self, dt: datetime.date, first_business_day_of_month: datetime.date) -> None:
         assert datetime_helpers.get_first_business_day_of_month(dt=dt) == first_business_day_of_month
 
 
 # see https://www.timeanddate.com/calendar/?year=2021&country=9
 class TestGetNthBusinessDayOfMonth:
-    # check nth_business_day_of_month
+    # check get_nth_business_day_of_month
     @pytest.mark.parametrize(
         argnames="current_dt,n,nth_business_day_of_month",
         argvalues=[
@@ -222,7 +222,7 @@ class TestGetNthBusinessDayOfMonth:
             (datetime.date(2021, 2, 5), 15, datetime.date(2021, 2, 19)),
         ],
     )
-    def test_nth_business_day_of_month(self, current_dt: datetime.date, n: int, nth_business_day_of_month: datetime.date) -> None:  # pylint: disable=invalid-name
+    def test_get_nth_business_day_of_month(self, current_dt: datetime.date, n: int, nth_business_day_of_month: datetime.date) -> None:  # pylint: disable=invalid-name
         assert datetime_helpers.get_nth_business_day_of_month(dt=current_dt, n=n) == nth_business_day_of_month
 
 
@@ -238,3 +238,133 @@ class TestDatetimeFromWindowsFiletime:
     )
     def test_datetime_from_windows_filetime(self, windows_filetime: int, datetime_from_windows_filetime: datetime.datetime) -> None:
         assert datetime_helpers.datetime_from_windows_filetime(windows_filetime=windows_filetime) == datetime_from_windows_filetime
+
+
+class TestDatetimeFromSeconds:
+    # check datetime_from_seconds
+    @pytest.mark.parametrize(
+        argnames="seconds,dt",
+        argvalues=[
+            (-1460851200, datetime.datetime(1923, 9, 17)),
+            (0, datetime.datetime(1970, 1, 1)),
+            (1, datetime.datetime(1970, 1, 1, 0, 0, 1)),
+            (1460851200, datetime.datetime(2016, 4, 17)),
+        ],
+    )
+    def test_datetime_from_seconds(self, seconds: int, dt: datetime.datetime) -> None:
+        assert datetime_helpers.datetime_from_seconds(seconds=seconds) == dt
+
+
+class TestDatetimeToSeconds:
+    # check datetime_to_seconds
+    @pytest.mark.parametrize(
+        argnames="dt,seconds",
+        argvalues=[
+            (datetime.datetime(1923, 9, 17), -1460851200),
+            (datetime.datetime(1970, 1, 1), 0),
+            (datetime.datetime(1970, 1, 1, 0, 0, 1), 1),
+            (datetime.datetime(2016, 4, 17), 1460851200),
+        ],
+    )
+    def test_datetime_to_seconds(self, dt: datetime.datetime, seconds: int) -> None:
+        assert datetime_helpers.datetime_to_seconds(dt=dt) == seconds
+
+
+class TestDatetimeToAndFromSecondsRoundTrip:
+    # check datetime_to_seconds, datetime_from_seconds round trip
+    @pytest.mark.parametrize(
+        argnames="dt",
+        argvalues=[
+            (datetime.datetime(1923, 9, 17)),
+            (datetime.datetime(1970, 1, 1)),
+            (datetime.datetime(1970, 1, 1, 0, 0, 1)),
+            (datetime.datetime(2016, 4, 17)),
+        ],
+    )
+    def test_datetime_to_and_from_seconds(self, dt: datetime.datetime) -> None:
+        assert datetime_helpers.datetime_from_seconds(seconds=datetime_helpers.datetime_to_seconds(dt=dt)) == dt
+
+    # check datetime_from_seconds, datetime_to_seconds round trip
+    @pytest.mark.parametrize(
+        argnames="seconds",
+        argvalues=[
+            (-1460851200),
+            (0),
+            (1),
+            (1460851200),
+        ],
+    )
+    def test_datetime_from_and_to_seconds(self, seconds: float) -> None:
+        assert datetime_helpers.datetime_to_seconds(dt=datetime_helpers.datetime_from_seconds(seconds=seconds)) == seconds
+
+
+class TestDatetimeFromMillis:
+    # check datetime_from_millis
+    @pytest.mark.parametrize(
+        argnames="millis,dt",
+        argvalues=[
+            (-1460851200000, datetime.datetime(1923, 9, 17)),
+            (0, datetime.datetime(1970, 1, 1)),
+            (1000, datetime.datetime(1970, 1, 1, 0, 0, 1)),
+            (1460851200000, datetime.datetime(2016, 4, 17)),
+        ],
+    )
+    def test_datetime_from_millis(self, millis: int, dt: datetime.datetime) -> None:
+        assert datetime_helpers.datetime_from_millis(millis=millis) == dt
+
+
+class TestDatetimeToMillis:
+    # check datetime_to_millis
+    @pytest.mark.parametrize(
+        argnames="dt,millis",
+        argvalues=[
+            (datetime.datetime(1923, 9, 17), -1460851200000),
+            (datetime.datetime(1970, 1, 1), 0),
+            (datetime.datetime(1970, 1, 1, 0, 0, 1), 1000),
+            (datetime.datetime(2016, 4, 17), 1460851200000),
+        ],
+    )
+    def test_datetime_to_millis(self, dt: datetime.datetime, millis: int) -> None:
+        assert datetime_helpers.datetime_to_millis(dt=dt) == millis
+
+
+class TestDatetimeToAndFromMillisRoundTrip:
+    # check datetime_to_millis, datetime_from_millis round trip
+    @pytest.mark.parametrize(
+        argnames="dt",
+        argvalues=[
+            (datetime.datetime(1923, 9, 17)),
+            (datetime.datetime(1970, 1, 1)),
+            (datetime.datetime(1970, 1, 1, 0, 0, 1)),
+            (datetime.datetime(2016, 4, 17)),
+        ],
+    )
+    def test_datetime_to_and_from_millis(self, dt: datetime.datetime) -> None:
+        assert datetime_helpers.datetime_from_millis(millis=datetime_helpers.datetime_to_millis(dt=dt)) == dt
+
+    # check datetime_from_millis, datetime_to_millis round trip
+    @pytest.mark.parametrize(
+        argnames="millis",
+        argvalues=[
+            (-1460851200000),
+            (0),
+            (1000),
+            (1460851200000),
+        ],
+    )
+    def test_datetime_from_and_to_millis(self, millis: float) -> None:
+        assert datetime_helpers.datetime_to_millis(dt=datetime_helpers.datetime_from_millis(millis=millis)) == millis
+
+
+class TestDatetimeFromDate:
+    # check datetime_from_date
+    @pytest.mark.parametrize(
+        argnames="dt,expected_dt",
+        argvalues=[
+            (datetime.datetime(1970, 1, 1), datetime.datetime(1970, 1, 1)),
+            (datetime.datetime(1970, 1, 1, 0, 0, 1), datetime.datetime(1970, 1, 1, 0, 0, 1)),
+            (datetime.date(1970, 1, 1), datetime.datetime(1970, 1, 1, 0, 0, 0)),
+        ],
+    )
+    def test_datetime_from_date(self, dt: datetime.date, expected_dt: datetime.datetime) -> None:
+        assert datetime_helpers.datetime_from_date(dt) == expected_dt
