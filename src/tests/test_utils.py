@@ -16,29 +16,20 @@ class TestGetPreviousBusinessDay:
         previous_dt = datetime_helpers.get_previous_business_day()
         assert previous_dt.weekday() == 4
 
-    # check previous business day on sunday
-    def test_sunday(self) -> None:
-        current_dt = datetime.date(2021, 3, 28)
+    # check get_previous_business_day
+    @pytest.mark.parametrize(
+        argnames="current_dt,weekday",
+        argvalues=[
+            (datetime.date(2021, 3, 26), 3),  # Friday
+            (datetime.date(2021, 3, 27), 4),  # Saturday
+            (datetime.date(2021, 3, 28), 4),  # Sunday
+            (datetime.date(2021, 3, 29), 4),  # Monday
+            (datetime.date(2021, 3, 31), 1),  # Wednesday
+        ],
+    )
+    def test_get_previous_business_day(self, current_dt: datetime.date, weekday: int) -> None:
         previous_dt = datetime_helpers.get_previous_business_day(dt=current_dt)
-        assert previous_dt.weekday() == 4
-
-    # check previous business day on saturday
-    def test_saturday(self) -> None:
-        current_dt = datetime.date(2021, 3, 27)
-        previous_dt = datetime_helpers.get_previous_business_day(dt=current_dt)
-        assert previous_dt.weekday() == 4
-
-    # check previous business day on monday
-    def test_monday(self) -> None:
-        current_dt = datetime.date(2021, 3, 29)
-        previous_dt = datetime_helpers.get_previous_business_day(dt=current_dt)
-        assert previous_dt.weekday() == 4
-
-    # check previous business day mid week date
-    def test_mid_week_date(self) -> None:
-        current_dt = datetime.date(2021, 3, 31)
-        previous_dt = datetime_helpers.get_previous_business_day(dt=current_dt)
-        assert previous_dt.weekday() == 1
+        assert previous_dt.weekday() == weekday
 
 
 class TestGetNextBusinessDay:
@@ -48,71 +39,67 @@ class TestGetNextBusinessDay:
         next_dt = datetime_helpers.get_next_business_day()
         assert next_dt.weekday() == 0
 
-    # check next business day on sunday
-    def test_sunday(self) -> None:
-        current_dt = datetime.date(2021, 3, 28)
+    # check get_next_business_day
+    @pytest.mark.parametrize(
+        argnames="current_dt,weekday",
+        argvalues=[
+            (datetime.date(2021, 3, 27), 0),  # Saturday
+            (datetime.date(2021, 3, 28), 0),  # Sunday
+            (datetime.date(2021, 3, 29), 1),  # Monday
+            (datetime.date(2021, 3, 31), 3),  # Wednesday
+        ],
+    )
+    def test_get_next_business_day(self, current_dt: datetime.date, weekday: int) -> None:
         next_dt = datetime_helpers.get_next_business_day(dt=current_dt)
-        assert next_dt.weekday() == 0
-
-    # check next business day on saturday
-    def test_saturday(self) -> None:
-        current_dt = datetime.date(2021, 3, 27)
-        next_dt = datetime_helpers.get_next_business_day(dt=current_dt)
-        assert next_dt.weekday() == 0
-
-    # check next business day on monday
-    def test_monday(self) -> None:
-        current_dt = datetime.date(2021, 3, 29)
-        next_dt = datetime_helpers.get_next_business_day(dt=current_dt)
-        assert next_dt.weekday() == 1
-
-    # check next business day mid week date
-    def test_mid_week_date(self) -> None:
-        current_dt = datetime.date(2021, 3, 31)
-        next_dt = datetime_helpers.get_next_business_day(dt=current_dt)
-        assert next_dt.weekday() == 3
+        assert next_dt.weekday() == weekday
 
 
 class TestDatetimeToString:
-    # check dt to string default format
-    def test_datetime_to_string(self) -> None:
-        current_dt = datetime.datetime(2016, 4, 17, 3, 12, 34)
-        expected_string = "2016-04-17T03:12:34.000000Z"
-        assert datetime_helpers.datetime_to_string(dt=current_dt) == expected_string
-
-    # check dt to string custom format
-    def test_datetime_to_string_custom_format(self) -> None:
-        current_dt = datetime.datetime(2016, 4, 17, 3, 12, 34)
-        expected_string = "04-2016-17T03:12:34.000000Z"
-        assert datetime_helpers.datetime_to_string(dt=current_dt, datetime_format="%m-%Y-%dT%H:%M:%S.%fZ") == expected_string
+    # check datetime_to_string
+    @pytest.mark.parametrize(
+        argnames="dt,datetime_format,text",
+        argvalues=[
+            (datetime.datetime(2016, 4, 17, 3, 12, 34), None, "2016-04-17T03:12:34.000000Z"),
+            (datetime.datetime(2016, 4, 17, 3, 12, 34), "%m-%Y-%dT%H:%M:%S.%fZ", "04-2016-17T03:12:34.000000Z"),
+        ],
+    )
+    def test_datetime_to_string(self, dt: datetime.datetime, datetime_format: Optional[str], text: str) -> None:
+        kwargs = {}
+        if datetime_format:
+            kwargs['datetime_format'] = datetime_format
+        assert datetime_helpers.datetime_to_string(dt=dt, **kwargs) == text
 
 
 class TestDateToString:
-    # check date to string default format
-    def test_date_to_string(self) -> None:
-        current_dt = datetime.date(2016, 4, 17)
-        expected_string = "2016-04-17"
-        assert datetime_helpers.date_to_string(dt=current_dt) == expected_string
-
-    # check dt to string custom format
-    def test_date_to_string_custom_format(self) -> None:
-        current_dt = datetime.date(2016, 4, 17)
-        expected_string = "17-04-2016"
-        assert datetime_helpers.date_to_string(dt=current_dt, date_format="%d-%m-%Y") == expected_string
+    # check date_to_string
+    @pytest.mark.parametrize(
+        argnames="dt,date_format,text",
+        argvalues=[
+            (datetime.date(2016, 4, 17), None, "2016-04-17"),
+            (datetime.date(2016, 4, 17), "%d-%m-%Y", "17-04-2016"),
+        ],
+    )
+    def test_date_to_string(self, dt: datetime.date, date_format: Optional[str], text: str) -> None:
+        kwargs = {}
+        if date_format:
+            kwargs['date_format'] = date_format
+        assert datetime_helpers.date_to_string(dt=dt, **kwargs) == text
 
 
 class TestDateFromString:
-    # check date from string default format
-    def test_date_from_string(self) -> None:
-        expected_dt = datetime.date(2016, 4, 17)
-        text = "2016-04-17"
-        assert datetime_helpers.date_from_string(text=text) == expected_dt
-
-    # check dt from string custom format
-    def test_date_from_string_custom_format(self) -> None:
-        expected_dt = datetime.date(2016, 4, 17)
-        text = "17-04-2016"
-        assert datetime_helpers.date_from_string(text=text, date_format="%d-%m-%Y") == expected_dt
+    # check date_from_string
+    @pytest.mark.parametrize(
+        argnames="text,date_format,dt",
+        argvalues=[
+            ("2016-04-17", None, datetime.date(2016, 4, 17)),
+            ("17-04-2016", "%d-%m-%Y", datetime.date(2016, 4, 17)),
+        ],
+    )
+    def test_date_from_string(self, text: str, date_format: Optional[str], dt: datetime.datetime) -> None:
+        kwargs = {}
+        if date_format:
+            kwargs['date_format'] = date_format
+        assert datetime_helpers.date_from_string(text=text, **kwargs) == dt
 
 
 class TestDatetimeFromString:
