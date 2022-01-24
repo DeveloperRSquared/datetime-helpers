@@ -50,7 +50,6 @@ ignore-patterns = [
 [tool.pylint.basic]
 good-names = [
   "db",
-  "id",
   "dt",
 ]
 
