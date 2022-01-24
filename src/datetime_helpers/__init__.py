@@ -1,5 +1,5 @@
 # isort: skip_file
-__version__ = '0.0.7'
+__version__ = '0.0.8'
 
 from .utils import DayOfWeek
 from .utils import get_day_of_week
@@ -14,3 +14,8 @@ from .utils import date_to_string
 from .utils import datetime_from_string
 from .utils import date_from_string
 from .utils import datetime_from_windows_filetime
+from .utils import datetime_from_seconds
+from .utils import datetime_from_millis
+from .utils import datetime_from_date
+from .utils import datetime_to_seconds
+from .utils import datetime_to_millis
