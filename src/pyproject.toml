@@ -51,6 +51,7 @@ ignore-patterns = [
 good-names = [
   "db",
   "id",
+  "dt",
 ]
 
 [tool.pylint.similarities]

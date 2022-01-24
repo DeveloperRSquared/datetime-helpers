@@ -1,6 +1,7 @@
 # isort: skip_file
-__version__ = '0.0.6'
+__version__ = '0.0.7'
 
+from .utils import DayOfWeek
 from .utils import get_day_of_week
 from .utils import is_weekend
 from .utils import is_weekday

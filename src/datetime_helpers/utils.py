@@ -5,45 +5,55 @@ from typing import Optional
 from http_exceptions.client_exceptions import BadRequestException
 
 JSON_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
-EPOCH = datetime.datetime.fromtimestamp(0)
+EPOCH = datetime.datetime.utcfromtimestamp(0)  # 00:00:00 UTC on 1 January 1970
 
 
-def get_day_of_week(dt: datetime.date) -> str:  # pylint: disable=invalid-name
+class DayOfWeek:
+    MONDAY = "Monday"
+    TUESDAY = "Tuesday"
+    WEDNESDAY = "Wednesday"
+    THURSDAY = "Thursday"
+    FRIDAY = "Friday"
+    SATURDAY = "Saturday"
+    SUNDAY = "Sunday"
+
+
+def get_day_of_week(dt: datetime.date) -> str:
     day_of_week_int = dt.weekday()
     return calendar.day_name[day_of_week_int]
 
 
-def is_weekend(dt: datetime.date) -> bool:  # pylint: disable=invalid-name
-    return get_day_of_week(dt=dt) in ["Saturday", "Sunday"]
+def is_weekend(dt: datetime.date) -> bool:
+    return get_day_of_week(dt=dt) in [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY]
 
 
-def is_weekday(dt: datetime.date) -> bool:  # pylint: disable=invalid-name
+def is_weekday(dt: datetime.date) -> bool:
     return not is_weekend(dt=dt)
 
 
-def get_previous_business_day(dt: Optional[datetime.date] = None) -> datetime.date:  # pylint: disable=invalid-name
+def get_previous_business_day(dt: Optional[datetime.date] = None) -> datetime.date:
     dt = dt or datetime.date.today()
-    if get_day_of_week(dt=dt) == "Sunday":
+    if get_day_of_week(dt=dt) == DayOfWeek.SUNDAY:
         previous_business_day_of_month = dt - datetime.timedelta(days=2)
-    elif get_day_of_week(dt=dt) == "Monday":
+    elif get_day_of_week(dt=dt) == DayOfWeek.MONDAY:
         previous_business_day_of_month = dt - datetime.timedelta(days=3)
     else:
         previous_business_day_of_month = dt - datetime.timedelta(days=1)
     return previous_business_day_of_month
 
 
-def get_next_business_day(dt: Optional[datetime.date] = None) -> datetime.date:  # pylint: disable=invalid-name
+def get_next_business_day(dt: Optional[datetime.date] = None) -> datetime.date:
     dt = dt or datetime.date.today()
-    if get_day_of_week(dt=dt) == "Friday":
+    if get_day_of_week(dt=dt) == DayOfWeek.FRIDAY:
         next_business_day_of_month = dt + datetime.timedelta(days=3)
-    elif get_day_of_week(dt=dt) == "Saturday":
+    elif get_day_of_week(dt=dt) == DayOfWeek.SATURDAY:
         next_business_day_of_month = dt + datetime.timedelta(days=2)
     else:
         next_business_day_of_month = dt + datetime.timedelta(days=1)
     return next_business_day_of_month
 
 
-def get_first_business_day_of_month(dt: Optional[datetime.date] = None) -> datetime.date:  # pylint: disable=invalid-name
+def get_first_business_day_of_month(dt: Optional[datetime.date] = None) -> datetime.date:
     dt = dt or datetime.date.today()
     first_day_of_month = datetime.date(dt.year, dt.month, 1)
     if is_weekday(dt=first_day_of_month):
@@ -63,11 +73,11 @@ def get_nth_business_day_of_month(n: int, dt: Optional[datetime.date] = None) ->
     return nth_business_day_of_month
 
 
-def datetime_to_string(dt: datetime.datetime, datetime_format: str = JSON_DATE_FORMAT) -> str:  # pylint: disable=invalid-name
+def datetime_to_string(dt: datetime.datetime, datetime_format: str = JSON_DATE_FORMAT) -> str:
     return dt.strftime(datetime_format)
 
 
-def date_to_string(dt: datetime.date, date_format: str = "%Y-%m-%d") -> str:  # pylint: disable=invalid-name  # pylint: disable=invalid-name
+def date_to_string(dt: datetime.date, date_format: str = "%Y-%m-%d") -> str:
     return dt.strftime(date_format)
 
 
