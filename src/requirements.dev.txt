@@ -1,6 +1,7 @@
 --requirement requirements.txt
 autoflake==1.4
 black==21.12b0
+coverage==6.3
 flake8==4.0.1
 freezegun==1.1.0
 isort==5.10.1

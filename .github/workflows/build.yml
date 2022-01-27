@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ['3.7', '3.8', '3.9', '3.10']
     steps:
       - uses: actions/checkout@v2
         with:
@@ -72,4 +72,16 @@ jobs:
         run: docker run --rm --volume $(pwd)/pyproject.toml:${WORKDIR}/pyproject.toml --env CI=true --entrypoint=python ${DOCKER_IMAGE} -m mypy --config-file ${WORKDIR}/pyproject.toml datetime_helpers tests
 
       - name: Run tests (pytest)
-        run: docker run --rm --volume $(pwd)/pyproject.toml:${WORKDIR}/pyproject.toml --env CI=true --entrypoint=python ${DOCKER_IMAGE} -m pytest -c ${WORKDIR}/pyproject.toml
+        run: |
+          CONTAINER_ID=$(docker run -d --rm --volume $(pwd)/pyproject.toml:${WORKDIR}/pyproject.toml --env CI=true --entrypoint=sleep ${DOCKER_IMAGE} 100)
+          docker exec ${CONTAINER_ID} coverage run -m pytest -c ${WORKDIR}/pyproject.toml
+          docker exec ${CONTAINER_ID} coverage xml
+          docker cp ${CONTAINER_ID}:${WORKDIR}/.coverage .
+          docker cp ${CONTAINER_ID}:${WORKDIR}/coverage.xml .
+          docker stop ${CONTAINER_ID}
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
