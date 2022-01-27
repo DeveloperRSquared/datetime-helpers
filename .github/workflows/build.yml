@@ -74,8 +74,7 @@ jobs:
       - name: Run tests (pytest)
         run: |
           CONTAINER_ID=$(docker run -d --rm --volume $(pwd)/pyproject.toml:${WORKDIR}/pyproject.toml --env CI=true --entrypoint=sleep ${DOCKER_IMAGE} 100)
-          docker exec ${CONTAINER_ID} coverage run -m pytest -c ${WORKDIR}/pyproject.toml
-          docker exec ${CONTAINER_ID} coverage xml
+          docker exec ${CONTAINER_ID} pytest --cov ./ --cov-report=xml
           docker cp ${CONTAINER_ID}:${WORKDIR}/.coverage .
           docker cp ${CONTAINER_ID}:${WORKDIR}/coverage.xml .
           docker stop ${CONTAINER_ID}
