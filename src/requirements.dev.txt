@@ -8,6 +8,7 @@ mypy==0.930
 pre-commit==2.16.0
 pylint==2.12.2
 pytest==6.2.5
+pytest-cov==3.0.0
 setuptools==60.0.4
 twine==3.7.1
 types-setuptools==57.4.4

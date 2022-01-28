@@ -1,0 +1,20 @@
+[run]
+branch = True
+source = datetime_helpers
+
+[report]
+# Regexes for lines to exclude from consideration
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self\.debug
+    pragma: no cover
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    @(abc\.)?abstractmethod
+
+fail_under = 95
+
+omit =
+    tests/*
+    **/__init__.py
