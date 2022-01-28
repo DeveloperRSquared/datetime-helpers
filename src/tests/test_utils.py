@@ -4,6 +4,7 @@ from typing import Optional
 
 import pytest
 from freezegun import freeze_time  # type: ignore[import]
+from http_exceptions import BadRequestException
 
 import datetime_helpers
 from datetime_helpers import DayOfWeek
@@ -220,10 +221,20 @@ class TestGetNthBusinessDayOfMonth:
             (datetime.date(2021, 2, 5), 13, datetime.date(2021, 2, 17)),
             (datetime.date(2021, 2, 5), 14, datetime.date(2021, 2, 18)),
             (datetime.date(2021, 2, 5), 15, datetime.date(2021, 2, 19)),
+            (datetime.date(2021, 2, 5), 16, datetime.date(2021, 2, 22)),
+            (datetime.date(2021, 2, 5), 17, datetime.date(2021, 2, 23)),
+            (datetime.date(2021, 2, 5), 18, datetime.date(2021, 2, 24)),
+            (datetime.date(2021, 2, 5), 19, datetime.date(2021, 2, 25)),
+            (datetime.date(2021, 2, 5), 20, datetime.date(2021, 2, 26)),
         ],
     )
     def test_get_nth_business_day_of_month(self, current_dt: datetime.date, n: int, nth_business_day_of_month: datetime.date) -> None:  # pylint: disable=invalid-name
         assert datetime_helpers.get_nth_business_day_of_month(dt=current_dt, n=n) == nth_business_day_of_month
+
+    # check that an exception is raised if the nth business day exceeds the month
+    def test_nth_business_day_exceeds_month(self) -> None:
+        with pytest.raises(BadRequestException):
+            datetime_helpers.get_nth_business_day_of_month(dt=datetime.date(2021, 2, 5), n=21)
 
 
 class TestDatetimeFromWindowsFiletime:
@@ -264,6 +275,7 @@ class TestDatetimeToSeconds:
             (datetime.datetime(1970, 1, 1), 0),
             (datetime.datetime(1970, 1, 1, 0, 0, 1), 1),
             (datetime.datetime(2016, 4, 17), 1460851200),
+            (datetime.date(2016, 4, 17), 1460851200),
         ],
     )
     def test_datetime_to_seconds(self, dt: datetime.datetime, seconds: int) -> None:
