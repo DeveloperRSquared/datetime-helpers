@@ -2,7 +2,7 @@ name: Deploy
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
 
 defaults:
   run:
@@ -41,6 +41,21 @@ jobs:
 
       - name: Build docker image
         run: docker build --tag ${DOCKER_IMAGE} --file Dockerfile .
+
+      - name: Run tests (pytest)
+        run: |
+          docker build --tag datetime-helpers --file Dockerfile .
+          CONTAINER_ID=$(docker run -d --rm --volume $(pwd)/pyproject.toml:/app/pyproject.toml --volume $(pwd)/.coveragerc:/app/.coveragerc --env CI=true --entrypoint=sleep datetime-helpers 100)
+          docker exec ${CONTAINER_ID} pytest -c /app/pyproject.toml
+          docker cp ${CONTAINER_ID}:/app/.coverage .
+          docker cp ${CONTAINER_ID}:/app/coverage.xml .
+          docker stop ${CONTAINER_ID}
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Publish package to PyPI
         run: |
