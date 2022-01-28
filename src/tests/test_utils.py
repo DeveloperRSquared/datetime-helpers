@@ -4,7 +4,7 @@ from typing import Optional
 
 import pytest
 from freezegun import freeze_time  # type: ignore[import]
-from http_exceptions import BadRequestException
+from http_exceptions.client_exceptions import BadRequestException
 
 import datetime_helpers
 from datetime_helpers import DayOfWeek
