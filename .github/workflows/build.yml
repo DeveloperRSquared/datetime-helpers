@@ -72,7 +72,6 @@ jobs:
 
       - name: Run tests (pytest)
         run: |
-          docker build --tag datetime-helpers --file Dockerfile .
           CONTAINER_ID=$(docker run -d --rm --volume $(pwd)/pyproject.toml:${WORKDIR}/pyproject.toml --volume $(pwd)/.coveragerc:${WORKDIR}/.coveragerc --env CI=true --entrypoint=sleep ${DOCKER_IMAGE} 100)
           docker exec ${CONTAINER_ID} pytest -c ${WORKDIR}/pyproject.toml
           docker cp ${CONTAINER_ID}:${WORKDIR}/.coverage .
