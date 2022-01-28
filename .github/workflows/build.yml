@@ -32,10 +32,9 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          # TODO(rikhil): make a requirements.test.txt file
-          pip install pytest freezegun
           if [[ -f requirements.txt ]]; then pip install --requirement requirements.txt; fi
-          # if [[ -f requirements.dev.txt ]]; then pip install --requirement requirements.dev.txt; fi
+          # TODO(rikhil): make a requirements.test.txt file
+          if [[ -f requirements.dev.txt ]]; then pip install --requirement requirements.dev.txt; fi
 
       - name: Display Python version
         run: python -c "import sys; print(sys.version);"
@@ -74,10 +73,10 @@ jobs:
       - name: Run tests (pytest)
         run: |
           docker build --tag datetime-helpers --file Dockerfile .
-          CONTAINER_ID=$(docker run -d --rm --volume $(pwd)/pyproject.toml:/app/pyproject.toml --volume $(pwd)/.coveragerc:/app/.coveragerc --env CI=true --entrypoint=sleep datetime-helpers 100)
-          docker exec ${CONTAINER_ID} pytest -c /app/pyproject.toml
-          docker cp ${CONTAINER_ID}:/app/.coverage .
-          docker cp ${CONTAINER_ID}:/app/coverage.xml .
+          CONTAINER_ID=$(docker run -d --rm --volume $(pwd)/pyproject.toml:${WORKDIR}/pyproject.toml --volume $(pwd)/.coveragerc:${WORKDIR}/.coveragerc --env CI=true --entrypoint=sleep ${DOCKER_IMAGE} 100)
+          docker exec ${CONTAINER_ID} pytest -c ${WORKDIR}/pyproject.toml
+          docker cp ${CONTAINER_ID}:${WORKDIR}/.coverage .
+          docker cp ${CONTAINER_ID}:${WORKDIR}/coverage.xml .
           docker stop ${CONTAINER_ID}
 
       - name: Upload coverage to Codecov
