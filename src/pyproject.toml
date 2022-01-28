@@ -32,7 +32,7 @@ exclude = '''
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--capture=no --log-cli-level=INFO --cov datetime_helpers/ --cov=datetime_helpers --cov-report term-missing --cov-report=xml --cov-fail-under=90 --cov-config=./pyproject.toml --cov-config=./.coveragerc tests/"
+addopts = "--capture=no --log-cli-level=INFO --cov=datetime_helpers/ --cov-report term-missing --cov-report=xml --cov-fail-under=90 --cov-config=./pyproject.toml --cov-config=./.coveragerc tests/"
 testpaths = [
     "tests",
 ]
