@@ -73,17 +73,17 @@ jobs:
         run: poetry run python -m flake8 --config $(pwd)/.flake8
 
       - name: Check lint (pylint)
-        run: poetry run python -m pylint --rcfile $(pwd)/pyproject.toml src/datetime_helpers src/tests
+        run: poetry run python -m pylint --rcfile $(pwd)/pyproject.toml src/
 
       - name: Check typing (mypy)
-        run: poetry run python -m mypy --config-file $(pwd)/pyproject.toml src/datetime_helpers src/tests
+        run: poetry run python -m mypy --config-file $(pwd)/pyproject.toml src/
 
       - name: Install pytest plugin
         if: ${{ matrix.python-version == '3.10' }}
         run: poetry run pip install pytest-github-actions-annotate-failures
 
       - name: Run tests (pytest)
-        run: poetry run python -m pytest src/tests/
+        run: poetry run python -m pytest src/
 
   build_test_pypi:
     name: Build TestPyPI
