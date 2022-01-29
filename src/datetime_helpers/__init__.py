@@ -1,5 +1,10 @@
 # isort: skip_file
-__version__ = '0.0.10'
+try:
+    from importlib.metadata import version
+except ImportError:
+    from importlib_metadata import version  # type: ignore[no-redef]
+
+__version__: str = version(__name__)
 
 from .utils import DayOfWeek
 from .utils import get_day_of_week
