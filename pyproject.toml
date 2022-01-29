@@ -151,7 +151,7 @@ disallow_untyped_defs = true
 
 # Warnings
 warn_return_any = true
-warn_unused_ignores = true
+# warn_unused_ignores = true
 warn_redundant_casts = true
 warn_unreachable = true
 

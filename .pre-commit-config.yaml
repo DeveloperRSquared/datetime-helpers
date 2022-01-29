@@ -71,6 +71,4 @@ repos:
     hooks:
       - id: mypy
         exclude: ^.*\b(migrations)\b.*$
-        additional_dependencies:
-          - 'pydantic'
         args: ['--config-file', 'pyproject.toml']
