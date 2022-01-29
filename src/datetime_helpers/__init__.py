@@ -1,4 +1,3 @@
-# type: ignore
 # isort: skip_file
 try:
     from importlib.metadata import version
