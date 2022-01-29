@@ -1,8 +1,0 @@
-# Ignore everything
-*
-
-# Except ...
-!datetime_helpers/**
-!tests/**
-!requirements.txt
-!requirements.dev.txt
