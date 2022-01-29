@@ -7,7 +7,6 @@ from freezegun import freeze_time  # type: ignore[import]
 from http_exceptions.client_exceptions import BadRequestException
 
 import datetime_helpers
-from datetime_helpers import DayOfWeek
 
 
 class TestGetPreviousBusinessDay:
@@ -125,13 +124,13 @@ class TestGetDayOfWeek:
     @pytest.mark.parametrize(
         argnames="dt,day_of_week",
         argvalues=[
-            (datetime.date(2021, 2, 1), DayOfWeek.MONDAY),  # monday
-            (datetime.date(2021, 2, 2), DayOfWeek.TUESDAY),  # tuesday
-            (datetime.date(2021, 2, 3), DayOfWeek.WEDNESDAY),  # wednesday
-            (datetime.date(2021, 2, 4), DayOfWeek.THURSDAY),  # thursday
-            (datetime.date(2021, 2, 5), DayOfWeek.FRIDAY),  # friday
-            (datetime.date(2021, 2, 6), DayOfWeek.SATURDAY),  # saturday
-            (datetime.date(2021, 2, 7), DayOfWeek.SUNDAY),  # sunday
+            (datetime.date(2021, 2, 1), datetime_helpers.DayOfWeek.MONDAY),  # monday
+            (datetime.date(2021, 2, 2), datetime_helpers.DayOfWeek.TUESDAY),  # tuesday
+            (datetime.date(2021, 2, 3), datetime_helpers.DayOfWeek.WEDNESDAY),  # wednesday
+            (datetime.date(2021, 2, 4), datetime_helpers.DayOfWeek.THURSDAY),  # thursday
+            (datetime.date(2021, 2, 5), datetime_helpers.DayOfWeek.FRIDAY),  # friday
+            (datetime.date(2021, 2, 6), datetime_helpers.DayOfWeek.SATURDAY),  # saturday
+            (datetime.date(2021, 2, 7), datetime_helpers.DayOfWeek.SUNDAY),  # sunday
         ],
     )
     def test_get_day_of_week(self, dt: datetime.date, day_of_week: str) -> None:

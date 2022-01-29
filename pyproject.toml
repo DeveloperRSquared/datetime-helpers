@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "datetime-helpers"
-version = "0.0.11"
+version = "0.0.12"
 description = "Util for working with date and datetime objects"
 authors = ["rikhilrai"]
 license = "MIT"
