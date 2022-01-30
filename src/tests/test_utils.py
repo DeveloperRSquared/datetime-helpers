@@ -333,6 +333,7 @@ class TestDatetimeToMillis:
             (datetime.datetime(1970, 1, 1), 0),
             (datetime.datetime(1970, 1, 1, 0, 0, 1), 1000),
             (datetime.datetime(2016, 4, 17), 1460851200000),
+            (datetime.datetime(2017, 4, 17), 1492387200000),
         ],
     )
     def test_datetime_to_millis(self, dt: datetime.datetime, millis: int) -> None:
