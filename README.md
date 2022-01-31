@@ -14,6 +14,14 @@ A handy collection of datetime utils.
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 
+## Install
+
+Install and update using [pip](https://pypi.org/project/datetime-helpers/).
+
+```sh
+$ pip install -U datetime-helpers
+```
+
 ## What's available?
 
 ```py
@@ -97,14 +105,6 @@ datetime.datetime(2017, 4, 17, 0, 0)
 datetime.datetime(2017, 4, 17, 0, 0)
 ```
 
-## Install
-
-Install and update using [pip](https://pypi.org/project/datetime-helpers/).
-
-```sh
-$ pip install -U datetime-helpers
-```
-
 ## Contributing
 
 Contributions are welcome via pull requests.
@@ -115,7 +115,7 @@ Contributions are welcome via pull requests.
 $ git clone git@github.com:DeveloperRSquared/datetime-helpers.git
 $ cd datetime-helpers
 $ poetry install
-$ source .venv/bin/activate
+$ poetry shell
 ```
 
 Tools including black, mypy etc. will run automatically if you install [pre-commit](https://pre-commit.com) using the instructions below
