@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "datetime-helpers"
-version = "0.0.13"
+version = "0.0.14"
 description = "Util for working with date and datetime objects"
 authors = ["rikhilrai"]
 license = "MIT"
@@ -38,8 +38,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-
-importlib-metadata = "^4.2.0"
+importlib-metadata = { version = "<4.3", python = "<3.8" }
 http-exceptions = "^0.2.6"
 
 [tool.poetry.dev-dependencies]

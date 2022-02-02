@@ -8,8 +8,10 @@ A handy collection of datetime utils.
 [![PyPI - License](https://img.shields.io/pypi/l/datetime-helpers.svg)](LICENSE)
 [![PyPI - Version](https://img.shields.io/pypi/v/datetime-helpers.svg)](https://pypi.org/project/datetime-helpers)
 
+[![CodeQL](https://github.com/DeveloperRSquared/datetime-helpers/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/DeveloperRSquared/datetime-helpers/actions/workflows/codeql-analysis.yml)
 [![codecov](https://codecov.io/gh/DeveloperRSquared/datetime-helpers/branch/main/graph/badge.svg?token=UI5ZDDDXXB)](https://codecov.io/gh/DeveloperRSquared/datetime-helpers)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/DeveloperRSquared/datetime-helpers/main.svg)](https://results.pre-commit.ci/latest/github/DeveloperRSquared/datetime-helpers/main)
+
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)

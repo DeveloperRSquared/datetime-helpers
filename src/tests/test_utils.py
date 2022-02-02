@@ -9,7 +9,45 @@ from http_exceptions.client_exceptions import BadRequestException
 import datetime_helpers
 
 
-class TestGetPreviousBusinessDay:
+class DatetimeHelpersTestCase:
+    pass
+
+
+class TestCreateDate(DatetimeHelpersTestCase):
+    # Ensure the expected date object is returned
+    def test_create_date(self) -> None:
+        expected_date = datetime.date(year=1991, month=12, day=19)
+        assert datetime_helpers.create_date(year=1991, month=12, day=19) == expected_date
+
+    # Ensure error thrown by date with ValueError
+    def test_create_date_value_error(self) -> None:
+        with pytest.raises(BadRequestException):
+            datetime_helpers.create_date(year=99999, month=1, day=2)
+
+    # Ensure error thrown by date with TypeError
+    def test_create_date_type_error(self) -> None:
+        with pytest.raises(BadRequestException):
+            datetime_helpers.create_date(year='a', month='a', day='a')  # type: ignore[arg-type]
+
+
+class TestCreateDatetime(DatetimeHelpersTestCase):
+    # Ensure the expected datetime object is returned
+    def test_create_datetime(self) -> None:
+        expected_date = datetime.datetime(year=1991, month=12, day=19)
+        assert datetime_helpers.create_datetime(year=1991, month=12, day=19, minute=None) == expected_date
+
+    # Ensure error thrown by datetime with ValueError
+    def test_create_datetime_value_error(self) -> None:
+        with pytest.raises(BadRequestException):
+            datetime_helpers.create_datetime(year=99999, month=1, day=2)
+
+    # Ensure error thrown by datetime with TypeError
+    def test_create_datetime_type_error(self) -> None:
+        with pytest.raises(BadRequestException):
+            datetime_helpers.create_datetime(year='a', month='a', day='a')  # type: ignore[arg-type]
+
+
+class TestGetPreviousBusinessDay(DatetimeHelpersTestCase):
     # check that we get the previous business day for default today
     @freeze_time(time_to_freeze="2012-01-14")
     def test_defaults(self) -> None:
@@ -32,7 +70,7 @@ class TestGetPreviousBusinessDay:
         assert previous_dt.weekday() == weekday
 
 
-class TestGetNextBusinessDay:
+class TestGetNextBusinessDay(DatetimeHelpersTestCase):
     # check that we get the next business day for default today
     @freeze_time(time_to_freeze="2012-01-13")
     def test_defaults(self) -> None:
@@ -54,7 +92,7 @@ class TestGetNextBusinessDay:
         assert next_dt.weekday() == weekday
 
 
-class TestDatetimeToString:
+class TestDatetimeToString(DatetimeHelpersTestCase):
     # check datetime_to_string
     @pytest.mark.parametrize(
         argnames="dt,datetime_format,text",
@@ -70,7 +108,7 @@ class TestDatetimeToString:
         assert datetime_helpers.datetime_to_string(dt=dt, **kwargs) == text
 
 
-class TestDateToString:
+class TestDateToString(DatetimeHelpersTestCase):
     # check date_to_string
     @pytest.mark.parametrize(
         argnames="dt,date_format,text",
@@ -86,7 +124,7 @@ class TestDateToString:
         assert datetime_helpers.date_to_string(dt=dt, **kwargs) == text
 
 
-class TestDateFromString:
+class TestDateFromString(DatetimeHelpersTestCase):
     # check date_from_string
     @pytest.mark.parametrize(
         argnames="text,date_format,dt",
@@ -102,7 +140,7 @@ class TestDateFromString:
         assert datetime_helpers.date_from_string(text=text, **kwargs) == dt
 
 
-class TestDatetimeFromString:
+class TestDatetimeFromString(DatetimeHelpersTestCase):
     # check datetime_from_string
     @pytest.mark.parametrize(
         argnames="text,datetime_format,dt",
@@ -119,7 +157,7 @@ class TestDatetimeFromString:
         assert datetime_helpers.datetime_from_string(text=text, **kwargs) == dt
 
 
-class TestGetDayOfWeek:
+class TestGetDayOfWeek(DatetimeHelpersTestCase):
     # check get_day_of_week
     @pytest.mark.parametrize(
         argnames="dt,day_of_week",
@@ -138,7 +176,7 @@ class TestGetDayOfWeek:
 
 
 # see https://www.timeanddate.com/calendar/?year=2021&country=9
-class TestIsWeekday:
+class TestIsWeekday(DatetimeHelpersTestCase):
     # check is_weekday
     @pytest.mark.parametrize(
         argnames="dt,is_weekday",
@@ -157,7 +195,7 @@ class TestIsWeekday:
 
 
 # see https://www.timeanddate.com/calendar/?year=2021&country=9
-class TestIsWeekend:
+class TestIsWeekend(DatetimeHelpersTestCase):
     # check is_weekend
     @pytest.mark.parametrize(
         argnames="dt,is_weekend",
@@ -176,7 +214,7 @@ class TestIsWeekend:
 
 
 # see https://www.timeanddate.com/calendar/?year=2021&country=9
-class TestGetFirstBusinessDayOfMonth:
+class TestGetFirstBusinessDayOfMonth(DatetimeHelpersTestCase):
     # check get_first_business_day_of_month
     @pytest.mark.parametrize(
         argnames="dt,first_business_day_of_month",
@@ -200,7 +238,7 @@ class TestGetFirstBusinessDayOfMonth:
 
 
 # see https://www.timeanddate.com/calendar/?year=2021&country=9
-class TestGetNthBusinessDayOfMonth:
+class TestGetNthBusinessDayOfMonth(DatetimeHelpersTestCase):
     # check get_nth_business_day_of_month
     @pytest.mark.parametrize(
         argnames="current_dt,n,nth_business_day_of_month",
@@ -236,7 +274,7 @@ class TestGetNthBusinessDayOfMonth:
             datetime_helpers.get_nth_business_day_of_month(dt=datetime.date(2021, 2, 5), n=21)
 
 
-class TestDatetimeFromWindowsFiletime:
+class TestDatetimeFromWindowsFiletime(DatetimeHelpersTestCase):
     # check datetime_from_windows_filetime
     @pytest.mark.parametrize(
         argnames="windows_filetime,datetime_from_windows_filetime",
@@ -250,7 +288,7 @@ class TestDatetimeFromWindowsFiletime:
         assert datetime_helpers.datetime_from_windows_filetime(windows_filetime=windows_filetime) == datetime_from_windows_filetime
 
 
-class TestDatetimeFromSeconds:
+class TestDatetimeFromSeconds(DatetimeHelpersTestCase):
     # check datetime_from_seconds
     @pytest.mark.parametrize(
         argnames="seconds,dt",
@@ -265,7 +303,7 @@ class TestDatetimeFromSeconds:
         assert datetime_helpers.datetime_from_seconds(seconds=seconds) == dt
 
 
-class TestDatetimeToSeconds:
+class TestDatetimeToSeconds(DatetimeHelpersTestCase):
     # check datetime_to_seconds
     @pytest.mark.parametrize(
         argnames="dt,seconds",
@@ -281,7 +319,7 @@ class TestDatetimeToSeconds:
         assert datetime_helpers.datetime_to_seconds(dt=dt) == seconds
 
 
-class TestDatetimeToAndFromSecondsRoundTrip:
+class TestDatetimeToAndFromSecondsRoundTrip(DatetimeHelpersTestCase):
     # check datetime_to_seconds, datetime_from_seconds round trip
     @pytest.mark.parametrize(
         argnames="dt",
@@ -309,7 +347,7 @@ class TestDatetimeToAndFromSecondsRoundTrip:
         assert datetime_helpers.datetime_to_seconds(dt=datetime_helpers.datetime_from_seconds(seconds=seconds)) == seconds
 
 
-class TestDatetimeFromMillis:
+class TestDatetimeFromMillis(DatetimeHelpersTestCase):
     # check datetime_from_millis
     @pytest.mark.parametrize(
         argnames="millis,dt",
@@ -324,7 +362,7 @@ class TestDatetimeFromMillis:
         assert datetime_helpers.datetime_from_millis(millis=millis) == dt
 
 
-class TestDatetimeToMillis:
+class TestDatetimeToMillis(DatetimeHelpersTestCase):
     # check datetime_to_millis
     @pytest.mark.parametrize(
         argnames="dt,millis",
@@ -340,7 +378,7 @@ class TestDatetimeToMillis:
         assert datetime_helpers.datetime_to_millis(dt=dt) == millis
 
 
-class TestDatetimeToAndFromMillisRoundTrip:
+class TestDatetimeToAndFromMillisRoundTrip(DatetimeHelpersTestCase):
     # check datetime_to_millis, datetime_from_millis round trip
     @pytest.mark.parametrize(
         argnames="dt",
@@ -368,7 +406,7 @@ class TestDatetimeToAndFromMillisRoundTrip:
         assert datetime_helpers.datetime_to_millis(dt=datetime_helpers.datetime_from_millis(millis=millis)) == millis
 
 
-class TestDatetimeFromDate:
+class TestDatetimeFromDate(DatetimeHelpersTestCase):
     # check datetime_from_date
     @pytest.mark.parametrize(
         argnames="dt,expected_dt",

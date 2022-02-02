@@ -19,6 +19,20 @@ class DayOfWeek:
     SUNDAY = "Sunday"
 
 
+def create_date(year: int, month: int, day: int) -> datetime.date:
+    try:
+        return datetime.date(year=year, month=month, day=day)
+    except (ValueError, TypeError) as exception:
+        raise BadRequestException(message=str(exception)) from None
+
+
+def create_datetime(year: int, month: int, day: int, hour: Optional[int] = None, minute: Optional[int] = None, second: Optional[int] = None, microsecond: Optional[int] = None) -> datetime.datetime:
+    try:
+        return datetime.datetime(year=year, month=month, day=day, hour=hour or 0, minute=minute or 0, second=second or 0, microsecond=microsecond or 0)
+    except (ValueError, TypeError) as exception:
+        raise BadRequestException(message=str(exception)) from None
+
+
 def get_day_of_week(dt: datetime.date) -> str:
     day_of_week_int = dt.weekday()
     return calendar.day_name[day_of_week_int]
