@@ -64,7 +64,19 @@ jobs:
         run: timeout 10s poetry run pip --version || rm -rf .venv
 
       - name: Install dependencies
+        run: poetry install --no-dev
+
+      - name: Check imports
+        run: poetry run python -c 'from src.datetime_helpers import __version__; print(__version__)'
+
+      - name: Install dev dependencies
         run: poetry install
+
+      - name: Check import order (isort)
+        run: poetry run python -m isort --check-only --settings-path $(pwd)/pyproject.toml src/
+
+      - name: Check unused imports (autoflake)
+        run: poetry run python -m autoflake --check --remove-unused-variable --remove-all-unused-imports --expand-star-imports --ignore-init-module-imports --recursive src/
 
       - name: Check code style (black)
         run: poetry run python -m black --config $(pwd)/pyproject.toml .

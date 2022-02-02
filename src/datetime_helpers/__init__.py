@@ -13,6 +13,8 @@ except PackageNotFoundError:
     __version__ = "unknown"
 
 from .utils import DayOfWeek
+from .utils import create_date
+from .utils import create_datetime
 from .utils import get_day_of_week
 from .utils import is_weekend
 from .utils import is_weekday
