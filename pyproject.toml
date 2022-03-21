@@ -39,19 +39,19 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.7"
 importlib-metadata = { version = "<4.3", python = "<3.8" }
-http-exceptions = "^0.2.6"
+http-exceptions = "^0.2.10"
 
 [tool.poetry.dev-dependencies]
-mypy = "^0.931"
+mypy = "^0.941"
 black = "^22.1"
 flake8 = "^4.0.1"
 isort = "^5.10.1"
 pre-commit = "^2.17.0"
-pytest = "^6.2.5"
+pytest = "^7.1.0"
 pylint = "^2.12.2"
 autoflake = "^1.4"
 pytest-cov = "^3.0.0"
-freezegun = "^1.1.0"
+freezegun = "^1.2.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
